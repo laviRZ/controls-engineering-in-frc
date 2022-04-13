@@ -201,6 +201,16 @@ setup_ubuntu:
 # The Ubuntu 22.04 packages are too old
 	pip3 install --user autoflake black pylint
 
+.PHONY: setup_windows
+setup_windows:
+	choco install \
+		llvm \
+		imagemagick \
+		inkscape
+	choco install texlive --params="'/collections:basic /extraPackages:biber,biblatex,cm-super,csquotes,datatool,enumitem,footmisc,glossaries,glossaries-english,imakeidx,latexmk,mdframed,mfirstuc,needspace,placeins,titlesec,tracklang,type1cm,was,xfor,zref'"
+	setx path "%PATH%;C:\texlive\2022\bin\win32"
+	pip3 install --user autoflake black requests wheel
+
 .PHONY: setup_macos
 setup_macos:
 	brew install \

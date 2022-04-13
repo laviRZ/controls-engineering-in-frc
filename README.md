@@ -139,6 +139,39 @@ These can be installed via `make setup_ubuntu`.
   * black (to format Python source code)
   * pylint (for Python linting)
 
+#### Windows
+
+These can be installed via `make setup_windows`.
+
+* choco packages (via "choco install")
+  * llvm (to format C++ code snippets)
+  * imagemagick (to compress JPEGs)
+  * inkscape (to convert SVGs to PDFs)
+  * texlive (for xelatex)
+* tlmgr packages (via choco texlive install)
+  * biber (for generating bibliography)
+  * biblatex (for generating bibliography)
+  * cm-super (for type1ec.sty)
+  * csquotes (used by textcomp package)
+  * datatool (used by xfor package)
+  * enumitem (customize lists)
+  * footmisc (used by gensymb)
+  * glossaries (for makeglossaries command)
+  * glossaries-english (english language module for glossaries package)
+  * imakeidx (used by listings package)
+  * latexmk
+  * mdframed (for creating the theorem, definition, exercise, and corollary
+    boxes)
+  * mfirstuc (used by glossaries package)
+  * needspace (used by zref package)
+  * placeins (used by subcaption package)
+  * titlesec (for titletoc package)
+  * tracklang (used by glossaries package)
+  * type1cm (for type1cm.sty)
+  * was (for gensymb package)
+  * xfor (used by textcase package)
+  * zref (used by mdframed package)
+
 #### macOS
 
 These can be installed via `make setup_macos`.
