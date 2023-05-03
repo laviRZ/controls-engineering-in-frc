@@ -93,7 +93,11 @@ $(CPP_EXE): build/%: %.cpp build/venv.stamp
 	cmake -B $(@D) -S $(dir $<)
 	# Build and run binary
 	cmake --build $(@D)
+ifeq ($(OS),Windows_NT)
+	cd $(@D) && ./Debug/$(notdir $(basename $<))
+else
 	cd $(@D) && ./$(notdir $(basename $<))
+endif
 	# Convert generated CSVs to PDFs
 	$(abspath $(VENV_PYTHON)) ./snippets/sleipnir_csv_to_pdf.py $(@D)/*.csv
 
