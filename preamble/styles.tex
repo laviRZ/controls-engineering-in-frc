@@ -6,6 +6,8 @@
 
 \definecolor{coverblue}{RGB}{56,107,166}
 \colorlet{themecolor}{coverblue}
+\definecolor{coverbluex}{RGB}{255,107,166}
+\colorlet{themecolorx}{coverbluex}
 \colorlet{headingbg}{black!5}
 \colorlet{glscolor}{black!50!white!80!blue}
 
@@ -28,7 +30,7 @@
 % Section text styling
 \titlecontents{section}[1.25cm] % Indentation
   {\addvspace{3pt}\sffamily\bfseries} % Spacing and font options
-  {\contentslabel[\thecontentslabel]{1.25cm}} % Section number
+  {\contentslabel[\thecontentslabel]{1.25cm}} % Section number	
   {}
   {\hfill\color{black}\thecontentspage} % Page number
   []
@@ -337,7 +339,7 @@
       \node at (current page.north west){%
         \begin{tikzpicture}[remember picture,overlay]%
           \fill[themecolor!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
-          \node[anchor=north] at (4cm,-3.25cm){%
+          \node[anchor=north] at (6cm,-3.25cm){%
             \color{themecolor!40}\fontsize{220}{100}\sffamily\bfseries\thepart};
           \node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm){%
             \parbox[t][][t]{8.5cm}{%
@@ -415,46 +417,26 @@
 \def\@makechapterhead#1{{%
   \parindent \z@ \raggedright \normalfont
   \ifnum \c@secnumdepth >\m@ne
-    \if@mainmatter
-      \begin{tikzpicture}[remember picture,overlay]
-        \node at (current page.north west){%
-          \begin{tikzpicture}[remember picture,overlay]
-            \node[anchor=north west,inner sep=0pt] at (0,0)%
-              {\ifusechapterimage\includegraphics[width=\paperwidth]%
-               {\thechapterimage}\fi};
-            \draw[anchor=west] (\paperwidth*0.6,-0.5cm) node [line width=2pt,%
-                rounded corners=5pt,fill=white,fill opacity=0.5,%
-                inner sep=0.5pt]{\strut\makebox[8.5cm]{}};
-            \draw[anchor=west] (\paperwidth*0.6,-0.5cm) node%
-              {\tiny\sffamily\bfseries\itshape\color{black}\thechapterimagecaption};
-            \draw[anchor=west] (\Gm@lmargin,-6cm) node%
-              [line width=2pt,rounded corners=15pt,draw=themecolor,fill=white,%
-               fill opacity=0.5,inner sep=15pt]{\strut\makebox[22cm]{}};
-            \draw[anchor=west] (\Gm@lmargin+.3cm,-6cm) node%
-              {\huge\sffamily\bfseries\color{black}\thechapter\autodot~#1\strut};
-          \end{tikzpicture}%
-        };
-      \end{tikzpicture}
-    \else
-      \begin{tikzpicture}[remember picture,overlay]
-        \node at (current page.north west){%
-          \begin{tikzpicture}[remember picture,overlay]
-            \node[anchor=north west,inner sep=0pt] at (0,0)%
-              {\ifusechapterimage\includegraphics[width=\paperwidth]%
-               {\thechapterimage}\fi};
-            \draw[anchor=west] (\paperwidth*0.6,-0.5cm) node [line width=2pt,%
-                rounded corners=5pt,fill=white,fill opacity=0.5,%
-                inner sep=0.5pt]{\strut\makebox[8.5cm]{}};
-            \draw[anchor=west] (\paperwidth*0.6,-0.5cm) node%
-              {\tiny\sffamily\bfseries\itshape\color{black}\thechapterimagecaption};
-            \draw[anchor=west] (\Gm@lmargin,-6cm) node%
-              [line width=2pt,rounded corners=15pt,draw=themecolor,fill=white,%
-               fill opacity=0.5,inner sep=15pt]{\strut\makebox[22cm]{}};
-            \draw[anchor=west] (\Gm@lmargin+.3cm,-6cm) node%
-              {\huge\sffamily\bfseries\color{black}#1\strut};
-          \end{tikzpicture}};
-      \end{tikzpicture}
-    \fi
+    \begin{tikzpicture}[remember picture,overlay]
+      \node at (current page.north west){%
+        \begin{tikzpicture}[remember picture,overlay]
+          \node[anchor=north west,inner sep=0pt] at (0,0)%
+            {\ifusechapterimage\includegraphics[width=\paperwidth]%
+             {\thechapterimage}\fi};
+          \draw[anchor=west] (\paperwidth*0.55,-1.5cm) node [line width=2pt,%
+              rounded corners=5pt,fill=white,fill opacity=0.5,%
+              inner sep=0.5pt]{\strut\makebox[8.5cm]{}};
+          \draw[anchor=west] (\paperwidth*0.55,-1.5cm) node%
+            {\tiny\sffamily\bfseries\itshape\color{black}\thechapterimagecaption};
+          \draw[anchor=west] (\Gm@lmargin+1cm,-6cm) node%
+            [line width=2pt,rounded corners=15pt,draw=themecolor,fill=white,%
+             fill opacity=0.5,inner sep=15pt]{\strut\makebox[22cm]{}};
+          \draw[anchor=west] (\Gm@lmargin+.3cm+1cm,-6cm) node%
+            {\huge\sffamily\bfseries\color{black}%
+        			\if@mainmatter\thechapter\autodot~\fi#1\strut};
+        \end{tikzpicture}%
+      };
+    \end{tikzpicture}
   \fi\par\vspace*{200\p@}}}
 
 %-------------------------------------------

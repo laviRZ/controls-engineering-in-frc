@@ -36,12 +36,13 @@
 
 \usepackage{textcomp,gensymb} % For degree symbol
 \usepackage[top=2cm,
-            bottom=2cm,
+            bottom=1.5cm,
             left=1.5cm,
             right=1.5cm,
+            bindingoffset=1cm,
             headsep=10pt,
             marginpar=70pt,
-            a5paper]{geometry}
+            papersize={17cm, 21cm}]{geometry}
 \usepackage{graphicx} % For including figures
 \graphicspath{{build/\jobname/imgs/}} % Specifies directory where images are stored
 \usepackage{imakeidx} % For \indexsetup command to fix index heading style
@@ -117,7 +118,6 @@
 \begin{document}
 % \usechapterimagefalse
 \frontmatter
-\input{frontmatter/cover}
 \input{frontmatter/title}
 \input{frontmatter/copyright}
 \input{frontmatter/toc}
@@ -209,5 +209,4 @@
 \input{backmatter/glossary}
 \input{backmatter/bibliography}
 \input{backmatter/index}
-\input{backmatter/cover}
 \end{document}
