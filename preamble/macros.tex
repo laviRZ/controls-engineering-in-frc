@@ -144,6 +144,16 @@
     \draw[themecolor,rotate=-45] (-0.1,-0.0025) rectangle (0.1,0.0025);
   \end{scope}}
 
+% QR code generator
+%
+% #1: URL
+\makeatletter
+\DeclareRobustCommand{\qrcode}{\hyper@normalise\@qrcode}
+\def\@qrcode#1{%
+  \input{|"snippets/qrcode_to_png.py #1"}\unskip%
+}
+\makeatother
+
 % Set custom \cleardoublepage
 \makeatletter
 \newcommand{\setcleardoublepage}{%
