@@ -36,15 +36,18 @@ ebook: $(NAME)-ebook.pdf
 .PHONY: printer
 printer: $(NAME)-printer.pdf
 
+.PHONY: figures
+figures: $(CPP_EXE) $(PY_STAMP)
+
 $(NAME)-ebook.pdf: $(TEX) $(NAME)-ebook.tex $(CPP_EXE) $(PY_STAMP) \
 		$(BIB) $(EBOOK_IMGS) $(SNIPPETS) build/commit-date.tex \
 		build/commit-year.tex build/commit-hash.tex
-	latexmk -interaction=nonstopmode -xelatex $(NAME)-ebook
+	latexmk -interaction=nonstopmode -xelatex -shell-escape $(NAME)-ebook
 
 $(NAME)-printer.pdf: $(TEX) $(NAME)-printer.tex $(CPP_EXE) $(PY_STAMP) \
 		$(BIB) $(PRINTER_IMGS) $(SNIPPETS) build/commit-date.tex \
 		build/commit-year.tex build/commit-hash.tex
-	latexmk -interaction=nonstopmode -xelatex $(NAME)-printer
+	latexmk -interaction=nonstopmode -xelatex -shell-escape $(NAME)-printer
 
 $(EBOOK_IMGS): build/controls-engineering-in-frc-ebook/%.jpg: %.jpg
 	@mkdir -p $(@D)
@@ -84,7 +87,7 @@ build/venv.stamp:
 	@mkdir -p $(@D)
 	python3 setup_venv.py
 	$(VENV_PIP) install -e ./bookutil
-	$(VENV_PIP) install frccontrol==2023.28 pylint requests robotpy-wpimath==2023.4.2
+	$(VENV_PIP) install frccontrol==2023.28 pylint qrcode requests robotpy-wpimath==2023.4.2
 	@touch $@
 
 $(CPP_EXE): build/%: %.cpp build/venv.stamp
@@ -141,6 +144,7 @@ clean: clean_tex
 .PHONY: clean_tex
 clean_tex:
 	latexmk -xelatex -C
+	rm -f build/controls-engineering-in-frc-*/qrcode_*.png
 	rm -f controls-engineering-in-frc-*.pdf
 
 .PHONY: upload
@@ -153,84 +157,3 @@ upload_ebook: ebook
 .PHONY: upload_printer
 upload_printer: printer
 	rsync --progress $(NAME)-printer.pdf file.tavsys.net:/srv/file/control/$(NAME)-printer.pdf
-
-.PHONY: setup_archlinux
-setup_archlinux:
-	sudo pacman -Sy --needed --noconfirm \
-		base-devel \
-		biber \
-		clang \
-		cmake \
-		imagemagick \
-		inkscape \
-		perl-clone \
-		python \
-		python-black \
-		python-pip \
-		python-pylint \
-		python-requests \
-		python-wheel \
-		texlive-bibtexextra \
-		texlive-core \
-		texlive-latexextra
-# autoflake isn't in [community] and we can't use an AUR helper
-	pip3 install --user autoflake
-
-.PHONY: setup_ubuntu
-setup_ubuntu:
-	sudo apt-get update -y
-	sudo apt-get install -y \
-		biber \
-		build-essential \
-		cm-super \
-		clang-format \
-		cmake \
-		dvipng \
-		imagemagick \
-		inkscape \
-		latexmk \
-		python3 \
-		python3-pip \
-		python3-requests \
-		python3-setuptools \
-		python3-wheel \
-		texlive-base \
-		texlive-bibtex-extra \
-		texlive-latex-extra \
-		texlive-xetex
-# The Ubuntu 22.04 packages are too old
-	pip3 install --user autoflake black pylint
-
-.PHONY: setup_macos
-setup_macos:
-	brew install \
-		basictex \
-		clang-format \
-		cmake \
-		imagemagick \
-		inkscape
-	sudo /Library/TeX/texbin/tlmgr update --self
-	sudo /Library/TeX/texbin/tlmgr install \
-		biber \
-		biblatex \
-		cm-super \
-		csquotes \
-		datatool \
-		enumitem \
-		footmisc \
-		gensymb \
-		glossaries \
-		glossaries-english \
-		imakeidx \
-		latexmk \
-		mdframed \
-		mfirstuc \
-		needspace \
-		placeins \
-		titlesec \
-		tracklang \
-		type1cm \
-		was \
-		xfor \
-		zref
-	pip3 install --user autoflake black pylint requests wheel
